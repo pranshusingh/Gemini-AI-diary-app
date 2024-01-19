@@ -9,6 +9,7 @@ this just gives the implementation of __text to text__ feature and get responses
 code is in the master branch , feel free to use __clone and contribute__ , lets make this basic app to high-end
 ***
 #Screenshots 
-![ss2](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/8eb9ced3-d841-4650-813d-569ab1dc555f)
-![ss1](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/8ae7e72f-1fcd-4437-b3e6-34e1bce49c71)
+![ss2](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/cc094df0-ebe4-4462-8299-47611787cf08)  ![ss1](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/43ab6cb8-2b1b-4722-8e71-ba424f5dc65b)
+
+
 
