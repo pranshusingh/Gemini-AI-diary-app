@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "277404303860",
+    "project_id": "my-application-opion",
+    "storage_bucket": "my-application-opion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277404303860:android:995974d32772ccde24f9a1",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLA9tKur-5cqtp93klCA78mTWe_3u_tDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
