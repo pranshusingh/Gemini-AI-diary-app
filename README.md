@@ -3,6 +3,7 @@
 This is an old app build that is now gets new feature , __Gemini ai apikey__
 using free 'api' and implementing that to get the results 
 this just gives the implementation of __text to text__ feature and get responses 
+try the [App](https://drive.google.com/file/d/1VRBzX4uQj4vxgTZeTSuc1ZZxUvoFDBdm/view?usp=sharing)
 ***
 ## check the official Gemini AI documentation - [Gemini AI](https://ai.google.dev/tutorials/android_quickstart#multi-turn-conversations-chat)
 
