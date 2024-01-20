@@ -12,11 +12,23 @@
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         android:elevation="10dp"
+        android:layout_weight="@integer/material_motion_duration_long_1"
         android:scrollIndicators="none"
         android:background="@color/white"
-        android:layout_weight="@integer/material_motion_duration_long_1"
         android:id="@+id/imagecard"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_below="@id/geminireply"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:visibility="visible"
+                android:src="@drawable/gemini_logo"
+                android:layout_height="400dp"
+                android:id="@+id/progress"/>
 
             <TextView
                 android:id="@+id/geminireply"
@@ -27,6 +39,8 @@
                 android:textSize="14sp"
                 android:textColor="#3E3E3E"
                 android:background="@color/white"/>
+        </RelativeLayout>
+
 
 
     </ScrollView>
@@ -49,7 +63,7 @@
                 android:padding="12dp"
                 android:hint="enter what you want to know"
                 android:textSize="16sp"
-                android:textColor="#2E2E2E"
+                android:textColor="#272727"
                 android:background="@color/white"/>
         </androidx.cardview.widget.CardView>
         <Button

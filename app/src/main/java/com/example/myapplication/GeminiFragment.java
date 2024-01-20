@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.ai.client.generativeai.GenerativeModel;
@@ -30,6 +32,7 @@ public class GeminiFragment extends Fragment {
    TextView geminireply;
    EditText entryText;
    Button startconv;
+   ImageView progressBar;
     GenerativeModel gm;
     GenerativeModelFutures model;
 
@@ -47,7 +50,7 @@ public class GeminiFragment extends Fragment {
         geminireply=view.findViewById(R.id.geminireply);
         entryText=view.findViewById(R.id.entertext);
         startconv=view.findViewById(R.id.startConv);
-
+        progressBar=view.findViewById(R.id.progress);
 
 
 // For text-only input, use the gemini-pro model
@@ -58,9 +61,12 @@ public class GeminiFragment extends Fragment {
         startconv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressBar.setVisibility(View.VISIBLE);
                 String usertext=entryText.getText().toString().trim();
-                String entry = "tell me in 200 words about "+usertext;
+                String entry = "answer in at most 200 words about "+usertext;
                 sendmessage(entry);
+
 
             }
         });
@@ -88,9 +94,11 @@ public class GeminiFragment extends Fragment {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(View.GONE);
                         geminireply.setText(resultText);
                     }
                 });
+
 
                 System.out.println(resultText);
             }
@@ -98,6 +106,8 @@ public class GeminiFragment extends Fragment {
             @Override
             public void onFailure(Throwable t) {
                 t.printStackTrace();
+
+
             }
         }, executor);
     }
