@@ -10,7 +10,4 @@ try the [App](https://drive.google.com/file/d/1VRBzX4uQj4vxgTZeTSuc1ZZxUvoFDBdm/
 code is in the **master** branch , feel free to use __clone and contribute__ , lets make this basic app to high-end
 ***
 ## Screenshots 
-
-![ss2](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/cc094df0-ebe4-4462-8299-47611787cf08)  ![ss1](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/43ab6cb8-2b1b-4722-8e71-ba424f5dc65b)
-
-
+![ss3](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/3d57144a-688b-408a-8102-3700aab470c4) ![ss1](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/ea8cb269-d21f-4ea9-988d-0532fe03e475) ![ss2](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/02ecd6f3-e56c-4da5-b415-f3d99a1572cc) 
