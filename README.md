@@ -1,4 +1,4 @@
-# Gemini AI diary app 
+# Gemini AI Notes app 
 
 This is an old app build that is now gets new feature , __Gemini ai apikey__
 using free 'api' and implementing that to get the results 
