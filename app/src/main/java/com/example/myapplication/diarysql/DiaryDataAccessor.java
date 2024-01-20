@@ -120,10 +120,10 @@ public class DiaryDataAccessor {
     }
 
     /**
-     * 执行非破坏性SQL语句
-     * @param sql SQL语句
-     * @return 查询到的结果
-     * @throws SQLException
+     * Execute non-destructive SQL statements
+     *      * @param sql SQL statement
+     *      * @return query results
+     *      * @throws SQLException
      */
     protected List<Diary> execQueryingSql(@NonNull String sql) throws SQLException {
         List<Diary> list = new LinkedList<>();

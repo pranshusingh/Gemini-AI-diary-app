@@ -2,7 +2,10 @@ package com.example.myapplication;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -24,6 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.myapplication.diarysql.DiaryDataAccessor;
+import com.example.myapplication.diarysql.DiaryDatabaseHelper;
+import com.example.myapplication.util.Diary;
+import com.example.myapplication.util.DiarySaveStatus;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -33,6 +40,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -44,12 +52,13 @@ public class GeminiFragment extends Fragment {
 
    TextView geminireply;
    EditText entryText;
-   Button startconvbt;
+   Button startconvbt, savebt;
    ImageView progressBar;
     GenerativeModel gm;
     GenerativeModelFutures model;
     Markwon markwon;
     ImageButton bt_mic;
+    String resultt;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
     public GeminiFragment() {
         // Required empty public constructor
@@ -67,50 +76,47 @@ public class GeminiFragment extends Fragment {
         entryText=view.findViewById(R.id.entertext);
         startconvbt=view.findViewById(R.id.startConv);
         progressBar=view.findViewById(R.id.progress);
+        savebt=view.findViewById(R.id.saveConv);
 
 
-// For text-only input, use the gemini-pro model
+        // For text-only input, use the gemini-pro model
         gm = new GenerativeModel( "gemini-pro", BuildConfig.ApiKey);
         model = GenerativeModelFutures.from(gm);
 
+        //use microphone
+        bt_mic.setOnClickListener(v -> {
+            Intent intent
+                    = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+                    Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text");
 
-        bt_mic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent
-                        = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
-                        Locale.getDefault());
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text");
-
-                try {
-                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
-                }
-                catch (Exception e) {
-                    Toast
-                            .makeText(getContext(), " " + e.getMessage(),
-                                    Toast.LENGTH_SHORT)
-                            .show();
-                }
+            try {
+                startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+            }
+            catch (Exception e) {
+                Toast
+                        .makeText(getContext(), " " + e.getMessage(),
+                                Toast.LENGTH_SHORT)
+                        .show();
             }
         });
-// Send the message
-        startconvbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startconvbt.setEnabled(false);
+        // Send the message
+        startconvbt.setOnClickListener(v -> {
+            startconvbt.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+            String usertext=entryText.getText().toString().trim();
+            String entry = "answer concisely about "+usertext;
 
-                progressBar.setVisibility(View.VISIBLE);
-                String usertext=entryText.getText().toString().trim();
-                String entry = "answer concisely about "+usertext;
+            sendmessage(entry);
 
-                sendmessage(entry);
-
-            }
         });
+
+        //save content
+        savebt.setOnClickListener(this::doOnSendButtonClick);
+
 
         return view;
     }
@@ -118,9 +124,7 @@ public class GeminiFragment extends Fragment {
 
 // Initialize the chat
 // Create a new user message
-
     private void sendmessage(String string) {
-
 
         Content userMessage = new Content.Builder()
                 .addText(string)
@@ -132,6 +136,7 @@ public class GeminiFragment extends Fragment {
             @Override
             public void onSuccess(GenerateContentResponse result) {
                 String resultText = result.getText();
+                resultt=resultText;
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -159,6 +164,36 @@ public class GeminiFragment extends Fragment {
         }, executor);
     }
 
+    void doOnSendButtonClick(View v){
+        //Send the message (your logic here)
+        Diary diary = new Diary(entryText.getText().toString().trim(),geminireply.getText().toString());
+        put(diary);
+        //Disable button
+        savebt.setEnabled(false);
+
+        //enable button after 1000 millisecond
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            savebt.setEnabled(true);
+        }, 1000);
+    }
+
+    public DiarySaveStatus put(Diary diary) {
+
+            SQLiteDatabase db =  new DiaryDatabaseHelper(getContext()).getReadableDatabase();
+            String countQuery = "SELECT COUNT(*) FROM diary";
+            Cursor cursor = db.rawQuery(countQuery, null);
+            cursor.moveToFirst();
+            int count = cursor.getInt(0);
+            cursor.close();
+            if (count!=0) {
+                ContentValues values = new ContentValues();
+                values.put("title", diary.title);
+                values.put("content", diary.content);
+                values.put("updatedAt", diary.updatedAt);
+                db.insert("diary", null, values);
+
+            }return DiarySaveStatus.CREATED;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,

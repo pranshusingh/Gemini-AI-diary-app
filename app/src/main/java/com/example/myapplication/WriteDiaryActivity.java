@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -17,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import io.noties.markwon.Markwon;
+
 public class WriteDiaryActivity extends AppCompatActivity {
 
     private TextView timeTextView;
@@ -24,12 +28,13 @@ public class WriteDiaryActivity extends AppCompatActivity {
     private EditText contentEditText;
     private ScheduledExecutorService executorService;
     private long currentDiaryId;
-
+    Markwon markwon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_diary);
+        markwon = Markwon.create(this);
 
         initialize();
     }
@@ -43,6 +48,7 @@ public class WriteDiaryActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         saveDiary();
         finish();
     }
@@ -73,7 +79,8 @@ public class WriteDiaryActivity extends AppCompatActivity {
     private void showData(Diary diary) {
         timeTextView.setText(getFormattedUpdateTimeString(diary.updatedAt));
         titleEditText.setText(diary.title);
-        contentEditText.setText(diary.content);
+//        contentEditText.setText(diary.content);
+        markwon.setMarkdown(contentEditText, diary.content);
     }
 
     private void refreshUpdateTime() {
