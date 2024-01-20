@@ -13,15 +13,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView bottomNavigationView;
+    Fragment write, gemini;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        write=new writeFragment();
+        gemini=new GeminiFragment();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -30,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.notes:
-                        selectedFragment = new writeFragment();
+                        selectedFragment = write;
                         break;
                     case R.id.store:
-                        selectedFragment = new GeminiFragment();
+                        selectedFragment =gemini;
                         break;
                 }
 
