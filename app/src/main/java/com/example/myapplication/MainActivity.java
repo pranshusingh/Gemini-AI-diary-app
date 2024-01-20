@@ -14,13 +14,14 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     Fragment write, gemini;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        write=new writeFragment();
+        write=new NotesFragment();
         gemini=new GeminiFragment();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set the initial fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new writeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotesFragment()).commit();
     }
 
 }

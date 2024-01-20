@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -23,8 +24,11 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import io.noties.markwon.Markwon;
 
 public class GeminiFragment extends Fragment {
 
@@ -35,6 +39,7 @@ public class GeminiFragment extends Fragment {
    ImageView progressBar;
     GenerativeModel gm;
     GenerativeModelFutures model;
+    Markwon markwon;
 
     public GeminiFragment() {
         // Required empty public constructor
@@ -47,6 +52,7 @@ public class GeminiFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_gemini, container, false);
 
+        markwon = Markwon.create(requireContext());
         geminireply=view.findViewById(R.id.geminireply);
         entryText=view.findViewById(R.id.entertext);
         startconv=view.findViewById(R.id.startConv);
@@ -95,7 +101,8 @@ public class GeminiFragment extends Fragment {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        geminireply.setText(resultText);
+                        assert resultText != null;
+                        markwon.setMarkdown(geminireply, resultText);
                     }
                 });
 

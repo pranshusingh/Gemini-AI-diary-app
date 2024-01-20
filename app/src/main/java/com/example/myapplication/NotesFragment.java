@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  */
-public class writeFragment extends Fragment {
+public class NotesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
@@ -44,7 +44,7 @@ public class writeFragment extends Fragment {
 
     private FloatingActionButton floatingActionButton;
 
-    writeFragment(){
+    NotesFragment(){
 
     }
     @Override
