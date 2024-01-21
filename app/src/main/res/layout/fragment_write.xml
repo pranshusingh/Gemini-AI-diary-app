@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
+            android:paddingBottom="5dp"
             android:clipToPadding="false"
             android:id="@+id/recycler"/>
         <TextView

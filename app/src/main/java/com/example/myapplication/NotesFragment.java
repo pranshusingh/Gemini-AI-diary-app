@@ -297,4 +297,5 @@ class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListen
         }
         return true;
     }
+
 }
