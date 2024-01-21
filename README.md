@@ -13,4 +13,3 @@ code is in the **master** branch , feel free to use __clone and contribute__ , l
 ![ss1](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/8efbb592-2c33-4bd3-af2d-d230acff7de6)
 ![ss4](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/a05b95cf-0e20-4999-b12a-5b85b1899185)
 ![ss3](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/8b1746af-9f91-4e96-863d-0a05aa14152d)
-![ss2](https://github.com/pranshusingh/Gemini-AI-diary-app/assets/42331128/ccbc6748-0a4e-4ccd-9616-fa1e160acdee)
