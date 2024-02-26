@@ -8,6 +8,12 @@
         android:icon="@drawable/logo_black"
         android:title="Notes" />
     <item
+        android:id="@+id/task"
+        android:checkable="true"
+        android:contentDescription="@string/app_name"
+        android:icon="@drawable/baseline_list_alt_24"
+        android:title="Tasks" />
+    <item
         android:id="@+id/store"
         android:checkable="true"
         android:icon="@drawable/ai"

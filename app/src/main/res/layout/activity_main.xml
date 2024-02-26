@@ -7,7 +7,6 @@
     android:background="@color/lighttheme"
     tools:context=".MainActivity">
 
-
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -26,8 +25,9 @@
             android:layout_width="match_parent"
             android:background="@color/darktheme"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-            android:layout_height="wrap_content"
-            app:labelVisibilityMode="selected"
+            android:layout_height="70dp"
+            app:labelVisibilityMode="unlabeled"
+            android:theme="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
             app:menu="@menu/bottom_navigation" />
     </androidx.cardview.widget.CardView>
 

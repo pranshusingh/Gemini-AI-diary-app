@@ -79,8 +79,8 @@ public class WriteDiaryActivity extends AppCompatActivity {
     private void showData(Diary diary) {
         timeTextView.setText(getFormattedUpdateTimeString(diary.updatedAt));
         titleEditText.setText(diary.title);
-//        contentEditText.setText(diary.content);
-        markwon.setMarkdown(contentEditText, diary.content);
+        contentEditText.setText(diary.content);
+
     }
 
     private void refreshUpdateTime() {

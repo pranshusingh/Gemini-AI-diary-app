@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.example.myapplication.MainActivity.resultText;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,17 +19,14 @@ import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.myapplication.diarysql.DiaryDataAccessor;
 import com.example.myapplication.diarysql.DiaryDatabaseHelper;
 import com.example.myapplication.util.Diary;
 import com.example.myapplication.util.DiarySaveStatus;
@@ -40,7 +39,6 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -78,7 +76,6 @@ public class GeminiFragment extends Fragment {
         progressBar=view.findViewById(R.id.progress);
         savebt=view.findViewById(R.id.saveConv);
 
-
         // For text-only input, use the gemini-pro model
         gm = new GenerativeModel( "gemini-pro", BuildConfig.ApiKey);
         model = GenerativeModelFutures.from(gm);
@@ -115,7 +112,7 @@ public class GeminiFragment extends Fragment {
         });
 
         //save content
-        savebt.setOnClickListener(this::doOnSendButtonClick);
+        savebt.setOnClickListener(this::doOnSaveButtonClick);
 
 
         return view;
@@ -135,16 +132,13 @@ public class GeminiFragment extends Fragment {
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
             @Override
             public void onSuccess(GenerateContentResponse result) {
-                String resultText = result.getText();
+                resultText = result.getText();
                 resultt=resultText;
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                        startconvbt.setEnabled(true);
-                        assert resultText != null;
-                        markwon.setMarkdown(geminireply, resultText);
-                    }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    startconvbt.setEnabled(true);
+                    assert resultText != null;
+                    markwon.setMarkdown(geminireply, resultText);
                 });
 
                 System.out.println(resultText);
@@ -164,7 +158,7 @@ public class GeminiFragment extends Fragment {
         }, executor);
     }
 
-    void doOnSendButtonClick(View v){
+    void doOnSaveButtonClick(View v){
         //Send the message (your logic here)
         Diary diary = new Diary(entryText.getText().toString().trim(),geminireply.getText().toString());
         put(diary);

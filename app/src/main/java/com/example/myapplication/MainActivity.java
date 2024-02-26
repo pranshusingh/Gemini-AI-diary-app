@@ -16,36 +16,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView bottomNavigationView;
-    Fragment write, gemini;
-
+    Fragment notes, gemini, task;
+    static String resultText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        write=new NotesFragment();
+        notes=new NotesFragment();
         gemini=new GeminiFragment();
-
+        task=new TaskFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-
-                switch (item.getItemId()) {
-                    case R.id.notes:
-                        selectedFragment = write;
-                        break;
-                    case R.id.store:
-                        selectedFragment =gemini;
-                        break;
-                }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            switch (item.getItemId()) {
+                case R.id.task:
+                    selectedFragment = task;
+                    break;
+                case R.id.notes:
+                    selectedFragment = notes;
+                    break;
+                case R.id.store:
+                    selectedFragment =gemini;
+                    break;
             }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            return true;
         });
 
         // Set the initial fragment

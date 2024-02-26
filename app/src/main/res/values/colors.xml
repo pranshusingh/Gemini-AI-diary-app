@@ -5,4 +5,6 @@
     <color name="blue">#29588A</color>
     <color name="lighttheme">#386697</color>
     <color name="darktheme">#0F1520</color>
+    <color name="accent">#C5DAFF</color>
+
 </resources>

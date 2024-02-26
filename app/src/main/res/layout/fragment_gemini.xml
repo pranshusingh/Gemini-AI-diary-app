@@ -26,8 +26,9 @@
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:visibility="visible"
+                android:scaleType="centerInside"
                 android:src="@drawable/gemini_logo"
-                android:layout_height="400dp"
+                android:layout_height="250dp"
                 android:id="@+id/progress"/>
 
             <TextView
@@ -35,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="12dp"
-                android:text="..."
                 android:textSize="14sp"
                 android:textColor="#3E3E3E"
                 android:background="@color/white"/>
@@ -52,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_margin="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="20dp"
             android:id="@+id/videocard"
             android:layout_height="wrap_content">
 
@@ -62,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp"
 
-                android:hint="enter what you want to know"
+                android:hint="Enter what you want to know"
                 android:textSize="16sp"
                 android:textColor="#272727"
                 android:background="@color/white"/>
@@ -81,7 +80,7 @@
                 android:layout_alignParentStart="true"
                 android:text="Save"
                 android:textColor="#DFDFDF"
-
+                android:backgroundTint="@color/darktheme"
                 android:id="@+id/saveConv"/>
 
             <ImageButton
@@ -103,6 +102,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="5dp"
                 android:text="Enter"
+                android:backgroundTint="@color/darktheme"
 
                 android:textColor="#DFDFDF" />
         </RelativeLayout>

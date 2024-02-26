@@ -59,7 +59,6 @@ public class NotesFragment extends Fragment {
         // Floating button click listener
         floatingActionButton.setOnClickListener(v -> {
             // Redirect to other page
-            Toast.makeText(getContext(), "Redirecting to other page", Toast.LENGTH_SHORT).show();
             Intent MoveToNext = new Intent (getContext(), WriteDiaryActivity.class);
             startActivity(MoveToNext);
 
@@ -236,13 +235,13 @@ class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder>
         String Icon=date.substring(11, 13);
         if((Integer.parseInt(Icon)<=15)&&(Integer.parseInt(Icon)>=9)){
             //sun
-            viewHolder.ImageIcon.setImageResource(R.drawable.day);
+            viewHolder.ImageIcon.setImageResource(R.drawable.sunny);
         }else if((Integer.parseInt(Icon)<=5)||(Integer.parseInt(Icon)>=20)){
             //moon
-            viewHolder.ImageIcon.setImageResource(R.drawable.night);
+            viewHolder.ImageIcon.setImageResource(R.drawable.moon);
             //c
         }else{
-            viewHolder.ImageIcon.setImageResource(R.drawable.evening);
+            viewHolder.ImageIcon.setImageResource(R.drawable.sunrise);
         }
     }
 

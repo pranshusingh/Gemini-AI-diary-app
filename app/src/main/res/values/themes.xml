@@ -3,7 +3,10 @@
     <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/lighttheme</item>
-        <item name="colorPrimaryDark">@color/lighttheme</item>
+        <item name="colorPrimaryDark">@color/darktheme</item>
+    </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/lighttheme</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

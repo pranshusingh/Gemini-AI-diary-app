@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/timeTextView"/>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -30,17 +30,21 @@
                 android:hint="TITLE"
                 android:gravity="center"
                 android:textSize="22sp"
+                android:padding="10dp"
                 android:textColorHint="#7E7E7E"
                 android:textColor="#111319"
                 android:id="@+id/titleedit"/>
+
             <EditText
+                android:id="@+id/discriptionedit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Discription"
+                android:background="#EDEDED"
                 android:gravity="top"
-                android:textColorHint="#7E7E7E"
+                android:padding="10dp"
+                android:hint="Discription"
                 android:textColor="#161920"
-                android:id="@+id/discriptionedit"/>
+                android:textColorHint="#7E7E7E" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
