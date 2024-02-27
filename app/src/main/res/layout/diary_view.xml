@@ -76,7 +76,7 @@
             android:id="@+id/imageView2"
             android:layout_width="35dp"
             android:layout_marginTop="5dp"
-            android:padding="6dp"
+            android:padding="10dp"
             android:layout_height="35dp"
             card_view:srcCompat="@drawable/logo_colour"
             card_view:tint="@color/white" />

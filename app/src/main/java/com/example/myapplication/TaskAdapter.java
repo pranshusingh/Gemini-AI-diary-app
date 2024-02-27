@@ -48,6 +48,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     interface OnTaskClickListener {
         void onTaskLongClick(Task task);
+        void onTaskClick(Task task);
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -55,12 +56,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private TextView taskDateTextView;
         private TextView taskPriorityTextView;
         private CheckBox completedCheckBox;
+        View view;
         TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             taskNameTextView = itemView.findViewById(R.id.text_task_name);
             taskDateTextView = itemView.findViewById(R.id.text_task_date);
             taskPriorityTextView = itemView.findViewById(R.id.text_task_priority);
             completedCheckBox = itemView.findViewById(R.id.checkbox_completed);
+            view=itemView.findViewById(R.id.view);
+            //single click
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && mListener != null) {
+                    mListener.onTaskClick(mTasks.get(position));
+                }
+            });
+            //long click
             itemView.setOnLongClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && mListener != null) {
@@ -69,21 +80,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
                 return false;
             });
+
         }
 
         void bind(Task task) {
             taskNameTextView.setText(task.getName());
-            taskDateTextView.setText(task.getDate());
+            String output = task.getDate().replace("/", " ➜ ");
+            taskDateTextView.setText(output);
             switch (task.getPriority()) {
                 case 1:
                     taskPriorityTextView.setText("Priority : HIGH");
-                    taskPriorityTextView.setTextColor(Color.RED);
+                    view.setBackgroundColor(Color.parseColor("#C70039"));
                     break;
                 case 2:
                     taskPriorityTextView.setText("Priority : MEDIUM");
+                    view.setBackgroundColor(Color.parseColor("#FFA500"));
                     break;
                 default:
                     taskPriorityTextView.setText("Priority : LOW");
+                    view.setBackgroundColor(Color.parseColor("#C5DAFF"));
             }
             completedCheckBox.setChecked(task.isCompleted());
         }

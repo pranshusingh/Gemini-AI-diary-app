@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Dialog;
-import android.app.Notification;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +22,28 @@ public class TaskDialogFragment extends DialogFragment {
     private Spinner taskPrioritySpinner;
     private ArrayAdapter<CharSequence> priorityAdapter;
     private TaskDataSource mDataSource;
+    private OnTaskDialogDismissedListener mListener;
+
+    public interface OnTaskDialogDismissedListener {
+        void onTaskaddDialogDismissed();
+    }
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (mListener != null) {
+            mListener.onTaskaddDialogDismissed();
+        }
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(),R.style.CustomDialogFragmentTheme);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_task, null);
         mDataSource = new TaskDataSource(requireContext());
         builder.setView(view)
-                .setTitle("Add Task")
+                .setTitle(" Add New Task")
+                .setIcon(R.drawable.logo_white)
                 .setPositiveButton("Add", (dialog, which) -> {
                     // Add task
                     String taskName = taskNameEditText.getText().toString().trim();

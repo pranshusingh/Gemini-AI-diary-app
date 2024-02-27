@@ -1,19 +1,16 @@
 package com.example.myapplication;
 
-import android.app.Dialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.tasksql.TaskDataSource;
@@ -25,11 +22,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickListener{
+import me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar;
+
+public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickListener,UpdateTaskDialogFragment.OnTaskDialogDismissedListener,TaskDialogFragment.OnTaskDialogDismissedListener{
     private RecyclerView mRecyclerView;
     private TaskAdapter mAdapter;
     private TaskDataSource mDataSource;
-
+    SemiCircleArcProgressBar progressBarall, high,mid, low;
+    TextView textprogress;
     public TaskFragment() {
         // Required empty public constructor
     }
@@ -49,6 +49,13 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickLis
 
         loadTasks();
 
+        progressBarall=root.findViewById(R.id.semicirculartaskbar);
+        high=root.findViewById(R.id.semihigh);
+        mid=root.findViewById(R.id.semimid);
+        low=root.findViewById(R.id.semilow);
+        textprogress=root.findViewById(R.id.progresstext);
+        setprogress();
+
         FloatingActionButton fab = root.findViewById(R.id.fab_add);
         fab.setOnClickListener(view -> showAddTaskDialog());
 
@@ -58,6 +65,20 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickLis
     public void onDestroy() {
         super.onDestroy();
         mDataSource.close();
+    }
+
+    public void setprogress(){
+        double i= (mDataSource.getCompletedTaskCount()*100)/mDataSource.getTotalTaskCount();
+        Log.d("TAG", "setprogress: "+i);
+        String string=mDataSource.getCompletedTaskCount()+" Completed Tasks. Total "+mDataSource.getTotalTaskCount()+" tasks.";
+        progressBarall.setPercentWithAnimation((int) i);
+        i= (mDataSource.getPriorityTaskCount(1)*100)/mDataSource.getTotalTaskCount();
+        high.setPercentWithAnimation((int) i);
+        i= (mDataSource.getPriorityTaskCount(2)*100)/mDataSource.getTotalTaskCount();
+        mid.setPercentWithAnimation((int) i);
+        i= (mDataSource.getPriorityTaskCount(3)*100)/mDataSource.getTotalTaskCount();
+        low.setPercentWithAnimation((int) i);
+        textprogress.setText(string);
     }
 
     public void loadTasks() {
@@ -76,6 +97,14 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickLis
     public void onTaskLongClick(Task task) {
         showDeleteConfirmationDialog(task);
     }
+
+    @Override
+    public void onTaskClick(Task task) {
+        UpdateTaskDialogFragment updateTaskDialogFragment= new UpdateTaskDialogFragment(task);
+        updateTaskDialogFragment.show(getActivity().getSupportFragmentManager(),"UpdateDialogFragment");
+
+    }
+
     private void showDeleteConfirmationDialog(Task task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Delete Task")
@@ -98,6 +127,16 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnTaskClickLis
 
     private void undoDelete(Task task) {
         mDataSource.addTask(task);
+        loadTasks();
+    }
+
+    @Override
+    public void onTaskDialogDismissed() {
+        loadTasks();
+    }
+
+    @Override
+    public void onTaskaddDialogDismissed() {
         loadTasks();
     }
 }

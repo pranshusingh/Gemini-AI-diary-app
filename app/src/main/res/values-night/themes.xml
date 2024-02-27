@@ -9,4 +9,8 @@
 
 
     </style>
+    <style name="CustomDialogFragmentTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/darktheme</item>
+        <item name="android:textColor">#FFFFFF</item><!-- Set background color to white -->
+    </style>
 </resources>

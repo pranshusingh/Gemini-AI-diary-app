@@ -99,4 +99,27 @@ public class TaskDataSource {
 
         database.delete(TaskContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
     }
+    public int getTotalTaskCount() {
+        return getAllTasks().size();
+    }
+    public int getPriorityTaskCount(int priority) {
+        int count = 0;
+        List<Task> tasks = getAllTasks();
+        for (Task task : tasks) {
+            if (task.getPriority() == priority) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getCompletedTaskCount() {
+        int count = 0;
+        List<Task> tasks = getAllTasks();
+        for (Task task : tasks) {
+            if (task.isCompleted()) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="20dp"
-    android:background="@color/darktheme"
     android:layout_height="wrap_content">
 
     <EditText
@@ -16,7 +16,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task date"
+        android:hint="Task detail"
         android:textColorHint="@color/lighttheme"
         android:textColor="@color/white"
         android:layout_below="@id/edit_text_task_name"

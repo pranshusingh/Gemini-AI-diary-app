@@ -15,7 +15,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,4 +57,6 @@ dependencies {
 
     // Required for streaming operations (to use `Publisher` from Guava Android)
     implementation("org.reactivestreams:reactive-streams:1.0.4")
+    implementation ("com.github.hadibtf:SemiCircleArcProgressBar:1.1.1")
+
 }

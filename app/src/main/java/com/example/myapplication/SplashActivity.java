@@ -2,46 +2,66 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.viewpager.widget.ViewPager;
 
 public class SplashActivity extends AppCompatActivity {
+    private GestureDetectorCompat gestureDetector;
+    private ViewPager viewPager;
 
-    private static final int SPLASH_DURATION = 2000; // 2 seconds
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        ImageView logoImageView = findViewById(R.id.logoImageView);
-        TextView logoTextView = findViewById(R.id.logoTextView);
+        viewPager = findViewById(R.id.viewPager);
+        SwipePagerAdapter adapter = new SwipePagerAdapter(this);
+        viewPager.setAdapter(adapter);
 
-        // fade-in animation
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(1000);
-        logoImageView.startAnimation(fadeIn);
-        logoTextView.startAnimation(fadeIn);
-        // Delay for SPLASH_DURATION and then launch the main activity
-        new Handler().postDelayed(() -> {
-            Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-            finish();
-        }, SPLASH_DURATION);
+        gestureDetector = new GestureDetectorCompat(this, new SwipeGestureListener());
+        viewPager.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+    }
+
+    private class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float diffX = e2.getX() - e1.getX();
+            float diffY = e2.getY() - e1.getY();
+
+            // Check if the absolute difference in X and Y exceeds the threshold
+            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD &&
+                    Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // Horizontal swipe detected
+                    if (diffX > 0) {
+                        // Swipe from left to right, navigate to the main activity
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        // Swipe from right to left
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } else {
+                    // Vertical swipe detected
+                    if (diffY > 0) {
+                        // Swipe from top to bottom
+                    } else {
+                        // Swipe from bottom to top
+                    }
+                }
+            }
+            return true;
+        }
     }
 
 }
